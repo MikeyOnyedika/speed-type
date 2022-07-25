@@ -1,0 +1,9 @@
+main {
+    padding-inline: var(--padding-inline-sm);
+    padding-block: var(--padding-block-sm);
+    background-color: var(--primary-clr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}

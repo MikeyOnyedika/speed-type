@@ -1,0 +1,60 @@
+:root {
+    /* color */
+    --light-clr: #FDEEE9;
+    --light-clr-dark: #82b9c5;
+    --white-clr: #FFFFFF;
+    --black-clr: #444444;
+    --primary-clr: #DD8E03;
+    --secondary-clr: #00C0E9;
+    --accent-clr: #FF45C3;
+
+    /* font */
+    --font-family: 'Montserrat', sans-serif;
+
+    /* font sizes at differnt screen sizes*/
+    --font-size-text-sm: 1rem;
+    --font-size-heading-sm: 1.8rem;
+
+    /* spacing */
+    --gap: 1rem;
+    --p1-sm: 1rem;
+    --p2-sm: var(--p1-sm);
+
+    --padding-block-sm: 0.5rem;
+    --padding-inline-sm: 0.5rem;
+
+    --margin-block-sm: 1rem;
+    --margin-inline-sm  : 1.3rem;
+
+    --border-radius: 0.4rem;
+
+    --outline-clr: var(--light-clr-dark);
+}
+
+.h1 {
+    font-weight: 600;
+    font-size: var(--font-size-heading-sm);
+}
+
+p,
+input,
+.btn {
+    font-weight: 400;
+    border-radius: var(--border-radius);
+    border: none;
+    outline: 0px solid var(--outline-clr);
+    font-size: var(--font-size-text-sm);
+    font-family: inherit;
+    transition: all 0.2s ease-in;
+}
+
+.btn {
+    cursor: pointer;
+    padding-inline: var(--padding-inline-sm);
+    padding-block: calc(var(--padding-block-sm));
+}
+
+input:focus, .btn:hover {
+    outline-width: calc(var(--p1-sm) * 0.2);
+    outline-style: solid
+}
