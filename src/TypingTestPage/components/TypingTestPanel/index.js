@@ -18,14 +18,15 @@ const defaultState = {
     words: [],
     wordCount: -1,
     currentWord: null,
-    timeRemainingInSec: 61,
+    timeRemainingInSec: 60,
     timeRemaining: "",
     currentWordSpan: null,
     wronglyTypedWords: [],
     correctlyTypedWords: [],
-    gameState: "NONE",
+    gameState: "NONE", // possible values - NONE, running, stopped
     isGameLoaded: true
 }
+
 
 function generateWords(mode) {
     switch (mode) {
@@ -117,25 +118,26 @@ const TypingTestPanel = ({ mode = "easy" }) => {
         // start countdown timer and move wordcount to 0 at the first keystroke
         if (state.wordCount === -1) {
             dispatch({ type: "setGameState", payload: "running" })
-            // start the countdown timer
         }
 
-
-        // if the spacebar was pressed
-        if (key === " ") {
-            // check that input box contains any actual text before moving to the next word
-            if (userInputText.trim() !== "") {
-                removeCSSClass(state.currentWordSpan, "highlight-current")
-                if (userInputText.trim() !== state.currentWord) {
-                    addCSSClass(state.currentWordSpan, "highlight-wrong")
-                } else {
-                    addCSSClass(state.currentWordSpan, "highlight-correct")
+        if (state.gameState === "running") {
+            // if the spacebar was pressed
+            if (key === " ") {
+                // check that input box contains any actual text before moving to the next word
+                if (userInputText.trim() !== "") {
+                    removeCSSClass(state.currentWordSpan, "highlight-current")
+                    if (userInputText.trim() !== state.currentWord) {
+                        addCSSClass(state.currentWordSpan, "highlight-wrong")
+                    } else {
+                        addCSSClass(state.currentWordSpan, "highlight-correct")
+                    }
+                    dispatch({ type: "moveToNextWord", payload: wordsPanelRef })
                 }
-                dispatch({ type: "moveToNextWord", payload: wordsPanelRef })
+                clearInputField();
             }
 
-            clearInputField();
         }
+
     }
 
 
@@ -222,12 +224,10 @@ const TypingTestPanel = ({ mode = "easy" }) => {
         setUserInputText('')
     }
 
-
-
     return (
         <div className='typing-text-panel'>
-
-            {state.isGameLoaded === true &&
+            {/* display the TextDisplay only if the state.gameState is not 'stopped' */}
+            {state.gameState !== 'stopped' &&
                 <TypingTestPanelState.Provider value={state}>
                     <TextDisplay wordsPanelRef={wordsPanelRef} />
                 </TypingTestPanelState.Provider>
@@ -237,7 +237,7 @@ const TypingTestPanel = ({ mode = "easy" }) => {
                 <input autoComplete="off" type="text" id="text-input" onKeyDownCapture={(e) => keyListener(e.key)} onChange={(e) => setUserInputText(e.target.value)} value={userInputText} />
                 <div>
                     <h3 id='time-remaining'>{state.timeRemaining || "00:00"}</h3>
-                    <button id="restart-btn" className='btn'>Restart</button>
+                    <button id="restart-btn" className='btn' >Restart</button>
                 </div>
             </div>
         </div>
@@ -247,7 +247,7 @@ const TypingTestPanel = ({ mode = "easy" }) => {
 
 
 
-function TextDisplay({ wordsPanelRef }) {
+const TextDisplay = ({ wordsPanelRef }) => {
     const parentState = useContext(TypingTestPanelState)
     return (
         <div className='text-display'>
