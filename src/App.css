@@ -12,7 +12,7 @@
     --font-family: 'Montserrat', sans-serif;
 
     /* font sizes at differnt screen sizes*/
-    --font-size-text-sm: 1rem;
+    --font-size-text-sm: 1.4rem;
     --font-size-heading-sm: 1.8rem;
 
     /* spacing */
@@ -21,7 +21,7 @@
     --p2-sm: var(--p1-sm);
 
     --padding-block-sm: 0.5rem;
-    --padding-inline-sm: 0.5rem;
+    --padding-inline-sm: 0.8rem;
 
     --margin-block-sm: 1rem;
     --margin-inline-sm  : 1.3rem;
