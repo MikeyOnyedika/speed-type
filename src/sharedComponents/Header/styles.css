@@ -1,4 +1,4 @@
-header{
+header {
     background-color: var(--light-clr);
     padding-inline: var(--padding-inline-sm);
     padding-block: var(--padding-block-sm);
@@ -18,7 +18,7 @@ header{
     align-items: flex-end;
     flex-direction: column;
     gap: calc(var(--gap) * 0.2);
-    padding-inline: var(--padding-inline-sm);
+    padding-inline: calc(var(--padding-inline-sm) * 0.2);
     padding-block: var(--padding-block-sm);
 }
 
@@ -30,11 +30,13 @@ header{
 .fast-mid {
     width: calc(var(--p1-sm) * 2);
     background-color: var(--secondary-clr);
+    margin-right: calc(var(--p1-sm) * 0.2);
 }
 
 .fast-bot {
     width: calc(var(--p1-sm) * 1);
     background-color: var(--accent-clr);
+    margin-right: calc(var(--p1-sm) * 0.4);
 }
 
 .part {
