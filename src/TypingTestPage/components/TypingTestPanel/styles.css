@@ -8,7 +8,7 @@
     gap: var(--gap);
     max-width: 1500px;
 }
-Total Words
+
 .text-display {
     line-height: 1.65;
     border-radius: var(--border-radius);

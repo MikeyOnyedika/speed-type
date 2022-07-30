@@ -6,7 +6,9 @@ const UserScore = ({ wpm, accuracy, words, letters }) => {
     const [correctLetters, wrongLetters] = letters
     console.log(typeof correctWords, typeof wrongWords, typeof correctLetters, typeof wrongLetters)
 
-    return (
+    
+
+    return ( 
         <div className='score-board-wrapper'>
             <div className="primary-score-board">
                 <div className="main-score score">
