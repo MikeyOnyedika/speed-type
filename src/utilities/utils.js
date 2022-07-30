@@ -1,39 +1,39 @@
 const fs = require('fs')
-const words  = require('./words.json')
+const words = require('./words.json')
 
-function generateWords(mode, max, min = 0 ) {
-        let data = words.data
+function generateWords(mode, max, min = 0) {
+    let data = words.data
 
-        let newData = []
+    let newData = []
 
-        // remove the carriage return from each word (i.e the \r)
-        data = data.map(word => {
-            return word.split("\r")[0]
-        })
+    // remove the carriage return from each word (i.e the \r)
+    data = data.map(word => {
+        return word.split("\r")[0]
+    })
 
-        // return 1000 words of length between min and max
-        for (let i = 0; i < data.length; i++) {
-            if (newData.length > 2000) break;
+    // return not more than 1000 words of length between min and max
+    for (let i = 0; i < data.length; i++) {
+        if (newData.length > 1000) break;
 
-            if (data[i].length >= min && data[i].length <= max) {
-                newData.push(data[i])
-            }
+        if (data[i].length >= min && data[i].length <= max) {
+            newData.push(data[i])
         }
+    }
 
 
-        console.log("Randomizing ...")
-        newData = randomize(newData)
+    console.log("Randomizing ...")
+    newData = randomize(newData)
 
-        newData = JSON.stringify(newData)
-        console.log(newData)
+    newData = JSON.stringify(newData)
+    console.log(newData)
 
-        const fileName = `./${mode}.json`
+    const fileName = `./${mode}.json`
 
-        fs.writeFile(fileName, newData, (err) => {
-            if (err) return err
-            console.log("success writing to file")
-        })
-        return 'done'
+    fs.writeFile(fileName, newData, (err) => {
+        if (err) return err
+        console.log("success writing to file")
+    })
+    return 'done'
 }
 
 function randomize(wordList) {

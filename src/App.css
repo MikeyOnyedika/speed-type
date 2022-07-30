@@ -7,6 +7,8 @@
     --primary-clr: #DD8E03;
     --secondary-clr: #00C0E9;
     --accent-clr: #FF45C3;
+    --red-clr: #DD0000;
+    --green-clr: #00DD00;
 
     /* font */
     --font-family: 'Montserrat', sans-serif;
@@ -14,6 +16,7 @@
     /* font sizes at differnt screen sizes*/
     --font-size-text-sm: 1.4rem;
     --font-size-heading-sm: 1.8rem;
+    --font-size-reg: 1rem;
 
     /* spacing */
     --gap: 1rem;
@@ -24,11 +27,14 @@
     --padding-inline-sm: 0.8rem;
 
     --margin-block-sm: 1rem;
-    --margin-inline-sm  : 1.3rem;
+    --margin-inline-sm: 1.3rem;
 
     --border-radius: 0.4rem;
 
     --outline-clr: var(--light-clr-dark);
+
+    /* other */
+    --score-size: 0.5rem;
 }
 
 .h1 {
@@ -38,23 +44,35 @@
 
 p,
 input,
-.btn {
+.btn,
+select {
     font-weight: 400;
     border-radius: var(--border-radius);
     border: none;
     outline: 0px solid var(--outline-clr);
-    font-size: var(--font-size-text-sm);
     font-family: inherit;
     transition: all 0.2s ease-in;
 }
 
+p,
+.btn,
+input {
+    font-size: var(--font-size-text-sm);
+}
+
 .btn {
     cursor: pointer;
+}
+
+
+.btn, select {
     padding-inline: var(--padding-inline-sm);
     padding-block: calc(var(--padding-block-sm));
 }
 
-input:focus, .btn:hover {
+
+input:focus,
+.btn:hover {
     outline-width: calc(var(--p1-sm) * 0.2);
     outline-style: solid
 }

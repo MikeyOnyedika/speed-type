@@ -1,13 +1,14 @@
 .typing-text-panel {
+    align-self: flex-start;
+    margin-top: var(--p1-sm);
     position: relative;
-    top: -10vh;
     padding-inline: var(--padding-inline-sm);
     display: flex;
     flex-direction: column;
     gap: var(--gap);
     max-width: 1500px;
 }
-
+Total Words
 .text-display {
     line-height: 1.65;
     border-radius: var(--border-radius);
@@ -19,25 +20,25 @@
     overflow: hidden;
 }
 
-.words{
+.words {
     height: 9rem;
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
     gap: calc(var(--gap) * 0.8);
-    line-height: 1.3; 
+    line-height: 1.3;
     position: relative;
 }
 
-.words .highlight-current{
+.words .highlight-current {
     background-color: #888888;
 }
 
-.words .highlight-wrong{
+.words .highlight-wrong {
     background-color: #DD0000;
 }
 
-.words .highlight-correct{
+.words .highlight-correct {
     color: #00DD00;
 }
 
@@ -52,8 +53,9 @@
 .controls>div {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     gap: var(--gap);
+    text-align: center;
 }
 
 #text-input,
@@ -80,10 +82,9 @@
     background-color: var(--light-clr);
 }
 
-
 #restart-btn:hover {
     color: var(--light-clr);
-    background-color: var(--secondary-clr);
+    border-color: var(--secondary-clr);
 }
 
 /* for screen sizes smaller than 500px */
@@ -96,14 +97,14 @@
 
 /* for screen sizes larger than 650px */
 @media screen and (min-width: 650px) {
-    .typing-text-panel{
+    .typing-text-panel {
         width: 70%;
     }
 }
 
 /* for screen sizes larger than 1000px */
 @media screen and (min-width: 1000px) {
-    .typing-text-panel{
+    .typing-text-panel {
         width: 60%;
     }
 }

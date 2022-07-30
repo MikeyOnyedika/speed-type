@@ -1,4 +1,5 @@
 import './styles.css'
+import repeatIcon from '../../../assets/repeat-cycle.svg'
 import React from 'react'
 import { useEffect } from 'react'
 import easy from '../../../utilities/easy.json'
@@ -10,6 +11,7 @@ import { useState } from 'react'
 import { useCallback } from 'react'
 import { createContext } from 'react'
 import { useContext } from 'react'
+import UserScore from '../UserScore/'
 
 
 let timerId;
@@ -21,10 +23,16 @@ const defaultState = {
     timeRemainingInSec: 60,
     timeRemaining: "",
     currentWordSpan: null,
-    wronglyTypedWords: [],
-    correctlyTypedWords: [],
-    gameState: "NONE", // possible values - NONE, running, stopped
-    isGameLoaded: true
+    wrongWords: [],
+    correctWords: [],
+    gameState: "NONE", // possible values - NONE, running, stopped, ready
+    isGameLoaded: false,
+    wrongLetters: [],
+    correctLetters: [],
+    showResult: false,
+    wpm: "",
+    accuracy: "",
+    lastKeyStroke: ""
 }
 
 
@@ -41,33 +49,64 @@ function generateWords(mode) {
     }
 }
 
+function randomize(arr) {
+    const newArr = []
+    for (let i = 0; i < arr.length; i++) {
+        const index = Math.floor(Math.random() * arr.length)
+        newArr.push(arr[index])
+    }
+    return newArr
+}
+
+function parseTime(timeInSec) {
+    let min = Math.floor(timeInSec / 60)
+    if (min < 10) {
+        min = "0" + min
+    }
+    let sec = Math.floor(timeInSec % 60)
+    if (sec < 10) {
+        sec = "0" + sec
+    }
+    return { min, sec }
+}
+
 function reducer(state, action) {
     switch (action.type) {
+        case "lastKeyStroke":
+            return { ...state, lastKeyStroke: action.payload }
+        case "setIsGameLoaded":
+            return { ...state, isGameLoaded: action.payload }
+        case "setTime":
+            const { min, sec } = parseTime(parseInt(action.payload))
+            return { ...state, timeRemaining: `${min}:${sec}`, timeRemainingInSec: parseInt(action.payload) }
         case "setGameState":
             return { ...state, gameState: action.payload }
         case "setWords":
-            return { ...state, words: action.words }
+            return { ...state, words: action.payload }
         case "countDown":
             let timeInSec = state.timeRemainingInSec
-
-            let min = Math.floor(timeInSec / 60)
-            if (min < 10) {
-                min = "0" + min
-            }
-            let sec = Math.floor(timeInSec % 60)
-            if (sec < 10) {
-                sec = "0" + sec
-            }
-
+            const { min: m, sec: s } = parseTime(timeInSec)
             timeInSec = state.timeRemainingInSec - 1
-            return { ...state, timeRemaining: `${min}:${sec}`, timeRemainingInSec: timeInSec }
+            return { ...state, timeRemaining: `${m}:${s}`, timeRemainingInSec: timeInSec }
         case "moveToNextWord":
             const wordCount = state.wordCount + 1;
             const currentWord = state.words[wordCount]
             const currentWordSpan = action.payload.current.querySelector(`span[word-index="${wordCount}"]`)
             return { ...state, wordCount, currentWord, currentWordSpan }
-        case "addToWronglyTypedWords":
-            return { ...state, wronglyTypedWords: [...state.wronglyTypedWords, action.payload] }
+        case "wrongWord":
+            return { ...state, wrongWords: [...state.wrongWords, action.payload] }
+        case "correctWord":
+            return { ...state, correctWords: [...state.correctWords, action.payload] }
+        case "wrongLetters":
+            return { ...state, wrongLetters: [...state.wrongLetters, ...action.payload] }
+        case "correctLetters":
+            return { ...state, correctLetters: [...state.correctLetters, ...action.payload] }
+        case "reset":
+            return action.payload
+        case "result":
+            return { ...state, wpm: action.payload.wpm, accuracy: action.payload.accuracy }
+        case "showResult":
+            return { ...state, showResult: action.payload }
         default:
             throw new Error("Action type not defined")
     }
@@ -77,18 +116,42 @@ function reducer(state, action) {
 
 const TypingTestPanelState = createContext(null)
 
-const TypingTestPanel = ({ mode = "easy" }) => {
+const TypingTestPanel = ({ time, mode }) => {
     const wordsPanelRef = useRef(null)
     const [state, dispatch] = useReducer(reducer, defaultState)
     const [userInputText, setUserInputText] = useState("")
 
     useEffect(() => {
-        dispatch({ type: "setWords", words: generateWords(mode) })
+        const words = randomize(generateWords(mode))
+        dispatch({ type: "setWords", payload: words })
     }, [mode])
+
+    // randomize the text to display and set is loaded to true
+    useEffect(() => {
+        if (state.words.length > 0) {
+            dispatch({ type: "setIsGameLoaded", payload: true })
+        }
+    }, [state.words])
+
+    useEffect(() => {
+        dispatch({ type: "setTime", payload: JSON.stringify(JSON.parse(time)) })
+    }, [time])
+
+
+    function restart() {
+        setUserInputText("")
+        dispatch({ type: "reset", payload: defaultState })
+        const words = randomize(generateWords(mode))
+        dispatch({ type: "setWords", payload: words })
+        dispatch({ type: "setTime", payload: JSON.stringify(JSON.parse(time)) })
+    }
+
 
     const memoisedMatchText = useCallback(() => {
         const userText = userInputText.trim()
-        const incorrectLettersArray = []
+        const wrongLetters = []
+        const correctLetters = []
+
         let loopLength = 0;
 
         if (userText.length <= state.currentWord.length) {
@@ -98,23 +161,38 @@ const TypingTestPanel = ({ mode = "easy" }) => {
         }
 
         for (let i = 0; i < loopLength; i++) {
-            if (userText[i] !== state.currentWord[i]) {
-                incorrectLettersArray.push(userText[i])
+            if (userText[i] === state.currentWord[i]) {
+                correctLetters.push(userText[i])
+            } else {
+                // { "what user typed instead" : "what user is supposed to type"}
+                wrongLetters.push({ [userText[i]]: state.currentWord[i] })
             }
         }
 
+
         // add the extra letters from the userText to the incorrectletters array if user typed more letters than the word has
         if (userText.length > state.currentWord.length) {
-            incorrectLettersArray.push(
-                ...userText.slice(state.currentWord.length, userText.length)
-            )
+            const extraWrongLetters = userText.slice(state.currentWord.length, userText.length)
+            for (let letter of extraWrongLetters) {
+                wrongLetters.push({ [letter]: "" })
+            }
         }
 
-        return incorrectLettersArray;
-    }, [userInputText, state.currentWord])
+        // only if the last key stroke was spacebar
+        if (userText.length < state.currentWord.length && state.lastKeyStroke === " ") {
+            dispatch({ type: "lastKeyStroke", payload: "" })
+            const extraWrongLetters = state.currentWord.slice(userText.length, state.currentWord.length)
+            for (let letter of extraWrongLetters) {
+                wrongLetters.push({ [letter]: "" })
+            }
+        }
+
+        return { wrongLetters, correctLetters };
+    }, [userInputText, state.currentWord, state.lastKeyStroke])
 
 
     function keyListener(key) {
+        dispatch({ type: "lastKeyStroke", payload: key })
         // start countdown timer and move wordcount to 0 at the first keystroke
         if (state.wordCount === -1) {
             dispatch({ type: "setGameState", payload: "running" })
@@ -125,12 +203,19 @@ const TypingTestPanel = ({ mode = "easy" }) => {
             if (key === " ") {
                 // check that input box contains any actual text before moving to the next word
                 if (userInputText.trim() !== "") {
+                    const { wrongLetters, correctLetters } = memoisedMatchText()
+
                     removeCSSClass(state.currentWordSpan, "highlight-current")
                     if (userInputText.trim() !== state.currentWord) {
                         addCSSClass(state.currentWordSpan, "highlight-wrong")
+                        dispatch({ type: "wrongWord", payload: state.currentWord })
                     } else {
                         addCSSClass(state.currentWordSpan, "highlight-correct")
+                        dispatch({ type: "correctWord", payload: state.currentWord })
                     }
+
+                    dispatch({ type: "correctLetters", payload: correctLetters })
+                    dispatch({ type: "wrongLetters", payload: wrongLetters })
                     dispatch({ type: "moveToNextWord", payload: wordsPanelRef })
                 }
                 clearInputField();
@@ -156,29 +241,11 @@ const TypingTestPanel = ({ mode = "easy" }) => {
 
     // stop game when state.timeRemainingInSec is less than 0
     useEffect(() => {
-        console.log(state.timeRemainingInSec)
         if (state.timeRemainingInSec < 0) {
             dispatch({ type: "setGameState", payload: "stopped" })
         }
     }, [state.timeRemainingInSec])
 
-
-    // does stuff when the game stops
-    useEffect(() => {
-        if (state.gameState === "stopped") {
-            clearInterval(timerId)
-            hideGamePanel()
-            calculateResult()
-        }
-    }, [state.gameState])
-
-    function hideGamePanel() {
-
-    }
-
-    function calculateResult() {
-        console.log("game STopped")
-    }
 
     // runs when program advances to the new word
     useEffect(() => {
@@ -191,14 +258,15 @@ const TypingTestPanel = ({ mode = "easy" }) => {
     }, [state.currentWordSpan])
 
 
+
     // runs after setUserInputText() finishes running
     useEffect(() => {
         // prevents running immediately component is rendered since state.currentWord will 
         // be set when user starts actually typing stuff
         if (state.currentWordSpan !== null && userInputText.length !== 0) {
             // color current word <span> depending of whether user made a typo or not
-            const wrongLetters = memoisedMatchText()
-
+            const wrongLetters = memoisedMatchText().wrongLetters
+            console.log(wrongLetters)
             if (wrongLetters.length !== 0) {
                 addCSSClass(state.currentWordSpan, "highlight-wrong")
             } else {
@@ -224,24 +292,67 @@ const TypingTestPanel = ({ mode = "easy" }) => {
         setUserInputText('')
     }
 
+
+
+    const memoisedCalculateResult = useCallback(() => {
+        // time in minutes
+        const timeInMin = parseInt(time) / 60;
+        const numberOfCorrectLetters = state.correctLetters.length
+
+        const wpm = (numberOfCorrectLetters / 5 / timeInMin)
+        console.log(wpm)
+        // accuracy = (correctLetters/totalletters) * 100
+        const numberOfTotalLetters = state.wrongLetters.length + state.correctLetters.length
+        const accuracy = Math.round((state.correctLetters.length / numberOfTotalLetters) * 100)
+        console.log(accuracy)
+
+        dispatch({ type: "result", payload: { wpm, accuracy } })
+    }, [state.correctLetters, time, state.wrongLetters.length])
+
+
+    // does stuff when the game stops
+    useEffect(() => {
+        if (state.gameState === "stopped") {
+            clearInterval(timerId)
+            memoisedCalculateResult()
+
+        }
+    }, [state.gameState, memoisedCalculateResult])
+
+    useEffect(() => {
+        if (state.wpm !== "" && state.accuracy !== "") {
+            dispatch({ type: "showResult", payload: true })
+        }
+    }, [state.wpm, state.accuracy])
+
     return (
-        <div className='typing-text-panel'>
-            {/* display the TextDisplay only if the state.gameState is not 'stopped' */}
-            {state.gameState !== 'stopped' &&
-                <TypingTestPanelState.Provider value={state}>
-                    <TextDisplay wordsPanelRef={wordsPanelRef} />
-                </TypingTestPanelState.Provider>
+        <>
+            {!state.isGameLoaded && (
+                <h3>Loading ...</h3>
+            )}
+
+            {state.isGameLoaded &&
+                (<div className='typing-text-panel'>
+                    {/* display the TextDisplay only if the state.gameState is not 'stopped' */}
+                    {state.gameState !== 'stopped' &&
+                        <TypingTestPanelState.Provider value={state}>
+                            <TextDisplay wordsPanelRef={wordsPanelRef} />
+                        </TypingTestPanelState.Provider>
+                    }
+
+                    <div className="controls">
+                        <input autoComplete="off" type="text" id="text-input" onKeyDownCapture={(e) => keyListener(e.key)} onChange={(e) => setUserInputText(e.target.value)} value={userInputText} />
+                        <div>
+                            <p id='time-remaining'>{state.timeRemaining}</p>
+                            <button type="button" id="restart-btn" className='btn' onClick={() => restart()}><img src={repeatIcon} alt="" /></button>
+                        </div>
+                    </div>
+
+                    {state.showResult && <UserScore wpm={state.wpm} accuracy={state.accuracy} words={[state.correctWords.length, state.wrongWords.length]} letters={[state.correctLetters.length, state.wrongLetters.length]} />}
+                </div >)
             }
 
-            <div className="controls">
-                <input autoComplete="off" type="text" id="text-input" onKeyDownCapture={(e) => keyListener(e.key)} onChange={(e) => setUserInputText(e.target.value)} value={userInputText} />
-                <div>
-                    <h3 id='time-remaining'>{state.timeRemaining || "00:00"}</h3>
-                    <button id="restart-btn" className='btn' >Restart</button>
-                </div>
-            </div>
-        </div>
-
+        </>
     )
 }
 
