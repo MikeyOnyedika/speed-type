@@ -13,7 +13,7 @@ const TypingTestSettings = ({ setMode, setTime: setT}) => {
             msg = "Time or Difficulty level has not been selected!"
             setErrorMsg(msg)
             return;
-        }
+        } 
 
         setErrorMsg("")
     }
