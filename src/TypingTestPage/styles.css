@@ -1,0 +1,9 @@
+.go-to-settings{
+    align-self: flex-start;
+}
+
+.settings-icon{
+    width: 1rem;
+    z-index: 555;
+}
+

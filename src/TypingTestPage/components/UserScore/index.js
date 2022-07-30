@@ -1,23 +1,40 @@
 import React from 'react'
+import { useCallback } from 'react'
 import './styles.css'
 
-const UserScore = ({ wpm, accuracy, words, letters }) => {
-    const [correctWords, wrongWords] = words
-    const [correctLetters, wrongLetters] = letters
-    console.log(typeof correctWords, typeof wrongWords, typeof correctLetters, typeof wrongLetters)
+const UserScore = ({ wpm, accuracy, words: [correctWords, wrongWords], letters: [correctLetters, wrongLetters] }) => {
+    const wpmRef = useCallback((node) => {
+        if (node !== null) {
+            node.style.color = chooseValueColor(wpm, 40)
+        }
+    }, [wpm])
 
-    
+    const accuracyRef = useCallback((node) => {
+        if (node !== null) {
+            node.style.color = chooseValueColor(accuracy, 70)
+        }
+    }, [accuracy])
 
-    return ( 
+    function chooseValueColor(value, minValue) {
+        let color;
+        if (value < minValue) {
+            color = "var(--red-clr)";
+        } else {
+            color = "var(--green-clr)";
+        }
+        return color;
+    }
+
+    return (
         <div className='score-board-wrapper'>
             <div className="primary-score-board">
                 <div className="main-score score">
-                    <div className="score-value">{wpm || 52}</div>
+                    <div className="score-value" ref={wpmRef}>{wpm}</div>
                     <div className="score-title">WPM</div>
                 </div>
 
                 <div className="sub-score score">
-                    <div className="score-value">{accuracy + "%" || "98%"}</div>
+                    <div className="score-value" ref={accuracyRef}>{accuracy + "%"}</div>
                     <div className="score-title">Accuracy</div>
                 </div>
 
