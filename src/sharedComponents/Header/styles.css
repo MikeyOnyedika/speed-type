@@ -1,7 +1,7 @@
 header {
-    background-color: var(--light-clr);
-    padding-inline: var(--padding-inline-sm);
-    padding-block: var(--padding-block-sm);
+    background-color: var(--primary-clr-30);
+    padding-inline: var(--padding-inline);
+    padding-block: var(--padding-block);
 }
 
 .logo-container {
@@ -18,28 +18,28 @@ header {
     align-items: flex-end;
     flex-direction: column;
     gap: calc(var(--gap) * 0.2);
-    padding-inline: calc(var(--padding-inline-sm) * 0.2);
-    padding-block: var(--padding-block-sm);
+    padding-inline: calc(var(--padding-inline) * 0.2);
+    padding-block: var(--padding-block);
 }
 
 .fast-top {
-    width: calc(var(--p1-sm) * 3);
+    width: calc(var(--p1) * 3);
     background-color: var(--primary-clr);
 }
 
 .fast-mid {
-    width: calc(var(--p1-sm) * 2);
+    width: calc(var(--p1) * 2);
     background-color: var(--secondary-clr);
-    margin-right: calc(var(--p1-sm) * 0.2);
+    margin-right: calc(var(--p1) * 0.2);
 }
 
 .fast-bot {
-    width: calc(var(--p1-sm) * 1);
+    width: calc(var(--p1) * 1);
     background-color: var(--accent-clr);
-    margin-right: calc(var(--p1-sm) * 0.4);
+    margin-right: calc(var(--p1) * 0.4);
 }
 
 .part {
     border-radius: 5px;
-    height: calc(var(--p1-sm) * 0.5);
+    height: calc(var(--p1) * 0.5);
 }

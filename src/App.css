@@ -1,37 +1,40 @@
 :root {
     /* color */
-    --light-clr: #FDEEE9;
-    --light-clr-dark: #82b9c5;
-    --white-clr: #FFFFFF;
-    --black-clr: #444444;
+    --light-clr: #FAECE6;
+    --black-clr: #000000;
     --primary-clr: #DD8E03;
-    --secondary-clr: #00C0E9;
-    --accent-clr: #FF45C3;
-    --red-clr: #9b2d2d;
-    --green-clr: #2b772b;
+    --primary-clr-30: #dd8e034d;
+    --secondary-clr: #45B5E2;
+    --accent-clr: #EB52B8;
+    --accent-clr-50: #EB52B880;
+    --secondary-clr-50: #45b5e280;
+
+
+    --correct-text-clr: var(--secondary-clr);
+    --current-text-highlight-clr: var(--primary-clr-30);
+    --incorrect-text-clr: var(--accent-clr);
+
 
     /* font */
     --font-family: 'Montserrat', sans-serif;
 
     /* font sizes at differnt screen sizes*/
-    --font-size-text-sm: 1.4rem;
-    --font-size-heading-sm: 1.8rem;
+    --font-size-text: 1.4rem;
+    --font-size-heading: 1.8rem;
     --font-size-reg: 1rem;
 
     /* spacing */
     --gap: 1rem;
-    --p1-sm: 1rem;
-    --p2-sm: var(--p1-sm);
+    --p1: 1rem;
 
-    --padding-block-sm: 0.5rem;
-    --padding-inline-sm: 0.8rem;
+    --padding-block: 0.5rem;
+    --padding-inline: 0.8rem;
 
-    --margin-block-sm: 1rem;
-    --margin-inline-sm: 1.3rem;
+    --margin-block: 1rem;
+    --margin-inline: 1.3rem;
 
     --border-radius: 0.4rem;
-
-    --outline-clr: var(--light-clr-dark);
+    --outline-clr: var(--secondary-clr-50);
 
     /* other */
     --score-size: 0.5rem;
@@ -39,7 +42,7 @@
 
 .h1 {
     font-weight: 600;
-    font-size: var(--font-size-heading-sm);
+    font-size: var(--font-size-heading);
 }
 
 p,
@@ -57,7 +60,7 @@ select {
 p,
 .btn,
 input {
-    font-size: var(--font-size-text-sm);
+    font-size: var(--font-size-text);
 }
 
 .btn {
@@ -67,14 +70,14 @@ input {
 
 .btn,
 select {
-    padding-inline: var(--padding-inline-sm);
-    padding-block: calc(var(--padding-block-sm));
+    padding-inline: var(--padding-inline);
+    padding-block: calc(var(--padding-block));
 }
 
 
 input:focus,
 .btn:hover {
-    outline-width: calc(var(--p1-sm) * 0.2);
+    outline-width: calc(var(--p1) * 0.2);
     outline-style: solid
 }
 
@@ -83,7 +86,7 @@ input:focus,
         font-size: 0.9rem;
     }
 
-    :root{
-        --padding-inline-sm: 0.6rem;
+    :root {
+        --padding-inline: 0.6rem;
     }
 }

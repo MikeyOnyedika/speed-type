@@ -2,11 +2,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--white-clr);
+    background: var(--light-clr);
     align-self: center;
     border-radius: var(--border-radius);
-    padding-inline: calc(var(--padding-inline-sm) * 3);
-    padding-block: calc(var(--padding-block-sm) * 5);
+    padding-inline: calc(var(--padding-inline) * 3);
+    padding-block: calc(var(--padding-block) * 5);
     gap: calc(var(--gap) * 3);
     box-shadow: 1px 1px 5px var(--primary-clr);
 }
@@ -29,8 +29,21 @@
     --score-size: 2rem;
 }
 
+.main-score>.score-value {
+    background-color: var(--secondary-clr-50);
+}
+
 .sub-score {
     --score-size: 1.5rem;
+}
+
+.sub-score>.score-value {
+    background-color: var(--accent-clr-50);
+}
+
+.score-value,
+.score-title {
+    color: var(--black-clr);
 }
 
 .score-value {
@@ -40,9 +53,9 @@
     width: 4em;
     height: 4em;
     border-radius: 50%;
-    padding-inline: var(--padding-inline-sm);
-    padding-block: var(--padding-block-sm);
-    background-color: var(--light-clr);
+    padding-inline: var(--padding-inline);
+    padding-block: var(--padding-block);
+    background-color: var(--primary-clr-30);
     box-shadow: 1px 1px 5px var(--primary-clr);
 }
 
@@ -71,9 +84,9 @@
 }
 
 .correct {
-    color: var(--green-clr);
+    color: var(--black-clr);
 }
 
 .wrong {
-    color: var(--red-clr);
+    color: var(--accent-clr);
 }

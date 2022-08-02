@@ -3,22 +3,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-block: var(--padding-block-sm);
-    align-items: flex-start;    
+    padding-block: var(--padding-block);
+    align-items: flex-start;
     width: 100%;
     align-self: flex-start;
     margin-top: 3rem;
-    
 }
 
 .typing-test-settings {
     border-radius: var(--border-radius);
-    padding-block: var(--padding-block-sm);
-    background: var(--white-clr);
-    padding-inline: calc(var(--padding-inline-sm) * 4);
-    padding-block: calc(var(--padding-block-sm) * 5);
+    padding-block: var(--padding-block);
+    background-color: var(--light-clr);
+    padding-inline: calc(var(--padding-inline) * 4);
+    padding-block: calc(var(--padding-block) * 5);
     z-index: 4;
-    display: flex; 
+    display: flex;
     flex-direction: column;
     gap: calc(var(--gap) * 2);
     max-width: 30rem;
@@ -49,23 +48,23 @@
 }
 
 #start-typing-btn {
-    margin-top: var(--p1-sm);
+    margin-top: var(--p1);
     font-size: var(--font-size-reg);
-    align-self: flex-end ;
+    align-self: flex-end;
 }
 
-#start-typing-btn:hover{
-    background-color: var(--light-clr);
+#start-typing-btn:hover {
+    background-color: var(--primary-clr-30);
     color: var(--secondary-clr);
 }
 
-.error-msg{
-    color: var(--red-clr);
+.error-msg {
+    color: var(--accent-clr);
     font-size: var(--font-size-reg);
 }
 
 @media screen and (max-width: 320px) {
-    .form-item{
+    .form-item {
         flex-direction: column;
         align-items: stretch;
     }

@@ -1,6 +1,6 @@
 main {
-    padding-inline: var(--padding-inline-sm);
-    padding-block: var(--padding-block-sm);
+    padding-inline: var(--padding-inline);
+    padding-block: var(--padding-block);
     background-color: var(--primary-clr);
     display: flex;
     justify-content: center;

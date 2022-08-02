@@ -18,9 +18,9 @@ const UserScore = ({ wpm, accuracy, words: [correctWords, wrongWords], letters: 
     function chooseValueColor(value, minValue) {
         let color;
         if (value < minValue) {
-            color = "var(--red-clr)";
+            color = "var(--black-clr)";
         } else {
-            color = "var(--green-clr)";
+            color = "var(--black-clr)";
         }
         return color;
     }
@@ -34,8 +34,8 @@ const UserScore = ({ wpm, accuracy, words: [correctWords, wrongWords], letters: 
                 </div>
 
                 <div className="sub-score score">
-                    <div className="score-value" ref={accuracyRef}>{accuracy + "%"}</div>
-                    <div className="score-title">Accuracy</div>
+                    <div className="score-value" ref={accuracyRef}>{accuracy}</div>
+                    <div className="score-title">Accuracy (%)</div>
                 </div>
 
             </div>
