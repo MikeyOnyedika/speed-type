@@ -80,12 +80,10 @@ input:focus,
 
 @media screen and (max-width: 500px) {
     html {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
-}
 
-@media screen and (max-width: 371px) {
-    html{
-        font-size: 0.6rem;
+    :root{
+        --padding-inline-sm: 0.6rem;
     }
 }

@@ -36,7 +36,7 @@ const TypingTestSettings = ({ setMode, setTime: setT}) => {
 
                         <div className="difficulty form-item">
                             <label htmlFor="difficulty">Difficulty Level: </label>
-                            <select name="difficulty-chooser" id="difficulty-chooser" onChange={(e) => setDifficulty(e.target.value)}>
+                            <select name="difficulty-chooser" id="difficulty" onChange={(e) => setDifficulty(e.target.value)}>
                                 <option value="" defaultValue={""}>Choose difficulty</option>
                                 <option value="easy">Easy</option>
                                 <option value="mid">Medium</option>
@@ -47,7 +47,7 @@ const TypingTestSettings = ({ setMode, setTime: setT}) => {
 
                         <div className="time form-item">
                             <label htmlFor="time">Time: </label>
-                            <select name="time-chooser" id="time-chooser" onChange={(e) => setTime(e.target.value)}>
+                            <select name="time-chooser" id="time" onChange={(e) => setTime(e.target.value)}>
                                 <option value="" defaultValue={""}>Choose time</option>
                                 <option value="30">30 seconds</option>
                                 <option value="60">1 minute</option>

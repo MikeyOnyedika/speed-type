@@ -15,10 +15,10 @@
     border-radius: var(--border-radius);
     padding-block: var(--padding-block-sm);
     background: var(--white-clr);
-    padding-inline: calc(var(--padding-block-sm) * 7);
+    padding-inline: calc(var(--padding-inline-sm) * 4);
     padding-block: calc(var(--padding-block-sm) * 5);
     z-index: 4;
-    display: flex;
+    display: flex; 
     flex-direction: column;
     gap: calc(var(--gap) * 2);
     max-width: 30rem;
@@ -64,6 +64,9 @@
     font-size: var(--font-size-reg);
 }
 
-@media screen and (max-width: 371px) {
-    
+@media screen and (max-width: 320px) {
+    .form-item{
+        flex-direction: column;
+        align-items: stretch;
+    }
 }
