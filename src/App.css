@@ -83,3 +83,9 @@ input:focus,
         font-size: 0.8rem;
     }
 }
+
+@media screen and (max-width: 371px) {
+    html{
+        font-size: 0.6rem;
+    }
+}
