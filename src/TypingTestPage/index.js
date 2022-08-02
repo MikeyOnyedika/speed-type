@@ -1,12 +1,13 @@
 import React from 'react'
-import './styles.css'
 import TypingTestPanel from './components/TypingTestPanel/'
 import Header from '../sharedComponents/Header/'
 import Main from '../sharedComponents/Main/'
 import TypingTestSettings from './components/TypingTestSettings/'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import settingsIcon from '../assets/settings.svg'
+import { createContext } from 'react'
+
+export const TypingTestPageContext = createContext();
 
 const TypingTestPage = () => {
   const [mode, setMode] = useState("")
@@ -26,23 +27,19 @@ const TypingTestPage = () => {
     <>
       <Header />
       <Main>
+
         {/* displayed when game is not set */}
-        {isGameSet || <TypingTestSettings setMode={setMode} setTime={setTime} />}
+        {isGameSet ||
+          <TypingTestSettings setMode={setMode} setTime={setTime} />
+        }
         {/* displayed only when time and mode has been set */}
-        {time && mode && <TypingTestPanel time={time} mode={mode} />}
-        {/* displayed when game is not set */}
-        {!isGameSet || (<div className="go-to-settings">
-          <button type='button' className="go-to-settings-btn btn" onClick={() => {
-            setMode("")
-            setTime(-1)
-            setIsGameSet(false)
-          }}>
-            <img src={settingsIcon} alt="" className='settings-icon' />
-          </button>
-        </div>)}
+        {time && mode &&
+          <TypingTestPageContext.Provider value={{ setMode, setTime, setIsGameSet }}>
+            <TypingTestPanel time={time} mode={mode} />
+          </TypingTestPageContext.Provider>
+        }
       </Main>
     </>
   )
 }
-
 export default TypingTestPage

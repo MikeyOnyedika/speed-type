@@ -16,7 +16,8 @@
 
 
     /* font */
-    --font-family: 'Montserrat', sans-serif;
+    --ff-1: 'Montserrat', sans-serif;
+    --ff-2: 'Open Sans', sans-serif;
 
     /* font sizes at differnt screen sizes*/
     --font-size-text: 1.4rem;
@@ -36,12 +37,15 @@
     --border-radius: 0.4rem;
     --outline-clr: var(--secondary-clr-50);
 
+    --main-section-padding-top: calc(var(--padding-block) * 3);
+    --main-section-padding-bottom: calc(var(--padding-block) * 2); 
+
     /* other */
     --score-size: 0.5rem;
 }
 
 .h1 {
-    font-weight: 600;
+    font-weight: 700;
     font-size: var(--font-size-heading);
 }
 

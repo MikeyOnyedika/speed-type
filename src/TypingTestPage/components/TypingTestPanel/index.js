@@ -12,6 +12,8 @@ import { useCallback } from 'react'
 import { createContext } from 'react'
 import { useContext } from 'react'
 import UserScore from '../UserScore/'
+import { TypingTestPageContext } from '../../index'
+import settingsIcon from '../../../assets/settings.svg'
 
 
 let timerId;
@@ -117,6 +119,8 @@ function reducer(state, action) {
 const TypingTestPanelState = createContext(null)
 
 const TypingTestPanel = ({ time, mode }) => {
+    const { setMode, setTime, setIsGameSet } = useContext(TypingTestPageContext)
+    console.log(TypingTestPageContext)
     const wordsPanelRef = useRef(null)
     const [state, dispatch] = useReducer(reducer, defaultState)
     const [userInputText, setUserInputText] = useState("")
@@ -333,6 +337,16 @@ const TypingTestPanel = ({ time, mode }) => {
 
             {state.isGameLoaded &&
                 (<div className='typing-text-panel'>
+                    <div>
+                        <button type="button" id="restart-btn" className='btn' onClick={() => restart()}><img src={repeatIcon} alt="" /></button>
+                        <button type='button' className="go-to-settings-btn btn" onClick={() => {
+                            setMode("")
+                            setTime(-1)
+                            setIsGameSet(false)
+                        }}>
+                            <img src={settingsIcon} alt="" className='settings-icon' />
+                        </button>
+                    </div>
                     {/* display the TextDisplay only if the state.gameState is not 'stopped' */}
                     {state.gameState !== 'stopped' &&
                         <TypingTestPanelState.Provider value={state}>
@@ -341,10 +355,10 @@ const TypingTestPanel = ({ time, mode }) => {
                     }
 
                     <div className="controls">
+
                         <input autoComplete="off" autoFocus type="text" id="text-input" onKeyDownCapture={(e) => keyListener(e.key)} onChange={(e) => setUserInputText(e.target.value)} value={userInputText} />
                         <div>
                             <p id='time-remaining'>{state.timeRemaining}</p>
-                            <button type="button" id="restart-btn" className='btn' onClick={() => restart()}><img src={repeatIcon} alt="" /></button>
                         </div>
                     </div>
 

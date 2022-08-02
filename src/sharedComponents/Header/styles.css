@@ -1,5 +1,5 @@
 header {
-    background-color: var(--primary-clr-30);
+    background-color: var(--light-clr);
     padding-inline: var(--padding-inline);
     padding-block: var(--padding-block);
 }

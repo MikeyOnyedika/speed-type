@@ -21,12 +21,12 @@
     flex-direction: column;
     gap: calc(var(--gap) * 2);
     max-width: 30rem;
-    max-height: 100%;
     box-shadow: 1px 1px 5px var(--accent-clr);
 }
 
 .title {
     color: var(--black-clr);
+    font-weight: 400;
 }
 
 .form-control-group {
@@ -51,6 +51,7 @@
     margin-top: var(--p1);
     font-size: var(--font-size-reg);
     align-self: flex-end;
+    background-color: var(--primary-clr);
 }
 
 #start-typing-btn:hover {
