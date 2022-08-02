@@ -27,13 +27,9 @@ const TypingTestSettings = ({ setMode, setTime: setT}) => {
     }, [errorMsg, time, difficulty, setMode, setT])
 
 
-
-
     return (
         <>
             <div className='typing-test-settings-wrapper'>
-                <div className="transparent-surface"></div>
-
                 <form className='typing-test-settings'>
                     <h2 className="title">Choose Typing Test Settings</h2>
                     <div className='form-control-group'>

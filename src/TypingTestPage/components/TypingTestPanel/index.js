@@ -348,7 +348,7 @@ const TypingTestPanel = ({ time, mode }) => {
                         </div>
                     </div>
 
-                    {state.showResult && <UserScore wpm={state.wpm} accuracy={state.accuracy} words={[state.correctWords.length, state.wrongWords.length]} letters={[state.correctLetters.length, state.wrongLetters.length]} />}
+                    {state.showResult && <UserScore wpm={state.wpm} accuracy={state.accuracy || 0} words={[state.correctWords.length, state.wrongWords.length]} letters={[state.correctLetters.length, state.wrongLetters.length]} />}
                 </div >)
             }
 

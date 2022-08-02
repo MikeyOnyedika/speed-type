@@ -1,25 +1,14 @@
 .typing-test-settings-wrapper {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
     z-index: 3;
     display: flex;
     justify-content: center;
+    align-items: center;
     padding-block: var(--padding-block-sm);
-    align-items: flex-start;
-}
-
-.transparent-surface {
-    background-color: var(--accent-clr);
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background-color: var(--secondary-clr);
-    opacity: 0.1;
+    align-items: flex-start;    
+    width: 100%;
+    align-self: flex-start;
+    margin-top: 3rem;
+    
 }
 
 .typing-test-settings {
@@ -33,8 +22,8 @@
     flex-direction: column;
     gap: calc(var(--gap) * 2);
     max-width: 30rem;
+    max-height: 100%;
     box-shadow: 1px 1px 5px var(--accent-clr);
-
 }
 
 .title {
@@ -73,4 +62,9 @@
 .error-msg{
     color: var(--red-clr);
     font-size: var(--font-size-reg);
+}
+
+@media screen and (max-width: 371px) {
+
+    
 }

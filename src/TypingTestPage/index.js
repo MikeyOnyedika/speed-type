@@ -26,8 +26,11 @@ const TypingTestPage = () => {
     <>
       <Header />
       <Main>
+        {/* displayed when game is not set */}
         {isGameSet || <TypingTestSettings setMode={setMode} setTime={setTime} />}
+        {/* displayed only when time and mode has been set */}
         {time && mode && <TypingTestPanel time={time} mode={mode} />}
+        {/* displayed when game is not set */}
         {!isGameSet || (<div className="go-to-settings">
           <button type='button' className="go-to-settings-btn btn" onClick={() => {
             setMode("")
