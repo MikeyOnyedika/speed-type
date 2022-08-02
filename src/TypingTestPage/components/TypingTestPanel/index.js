@@ -341,7 +341,7 @@ const TypingTestPanel = ({ time, mode }) => {
                     }
 
                     <div className="controls">
-                        <input autoComplete="off" type="text" id="text-input" onKeyDownCapture={(e) => keyListener(e.key)} onChange={(e) => setUserInputText(e.target.value)} value={userInputText} />
+                        <input autoComplete="off" autoFocus type="text" id="text-input" onKeyDownCapture={(e) => keyListener(e.key)} onChange={(e) => setUserInputText(e.target.value)} value={userInputText} />
                         <div>
                             <p id='time-remaining'>{state.timeRemaining}</p>
                             <button type="button" id="restart-btn" className='btn' onClick={() => restart()}><img src={repeatIcon} alt="" /></button>
