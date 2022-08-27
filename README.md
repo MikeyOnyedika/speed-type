@@ -1,6 +1,6 @@
 # Speed Type
 
-[Live Demo](https://speeed-type.herokuapp.com/)
+[Live Demo: Try it out!](https://speeed-type.herokuapp.com/)
 
 A typing practice app to help you improve your typing speed and accuracy.
 
@@ -10,3 +10,5 @@ A typing practice app to help you improve your typing speed and accuracy.
 ![typing practice test image](./src/assets/practice.png)
 ### View result
 ![typing practice test image](./src/assets/practice-score.png)
+
+[Live Demo: Try it out!](https://speeed-type.herokuapp.com/)
