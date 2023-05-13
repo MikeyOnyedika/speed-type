@@ -11,4 +11,4 @@ A typing practice app to help you improve your typing speed and accuracy.
 ### View result
 ![typing practice test image](./src/assets/practice-score.png)
 
-[Live Demo: Try it out!](https://speeed-type.herokuapp.com/)
+[Live Demo: Try it out!](https://speed-type-zeta.vercel.app)
