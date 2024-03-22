@@ -13,7 +13,7 @@
 .typing-test-settings {
     border-radius: var(--border-radius);
     padding-block: var(--padding-block);
-    background-color: var(--light-clr);
+    /* background-color: var(--light-clr); */
     padding-inline: calc(var(--padding-inline) * 4);
     padding-block: calc(var(--padding-block) * 5);
     z-index: 4;
@@ -21,11 +21,12 @@
     flex-direction: column;
     gap: calc(var(--gap) * 2);
     max-width: 30rem;
-    box-shadow: 1px 1px 5px var(--accent-clr);
+    box-shadow: 1px 1px 5px var(--primary-clr);
 }
 
 .title {
     color: var(--black-clr);
+    font-family: var(--ff-1);
     font-weight: 400;
 }
 
@@ -47,16 +48,27 @@
     font-weight: 600;
 }
 
+.form-item>select{
+    font-family: var(--ff-1);
+    font-size: var(--font-size-reg);
+}
+
 #start-typing-btn {
     margin-top: var(--p1);
     font-size: var(--font-size-reg);
     align-self: flex-end;
+    color: white;
     background-color: var(--primary-clr);
+    outline-color: var(--primary-clr);
+    outline-width: 0.2rem;
 }
 
 #start-typing-btn:hover {
-    background-color: var(--primary-clr-30);
-    color: var(--secondary-clr);
+    /* background-color: var(--primary-clr-30); */
+    /* color: var(--secondary-clr); */
+    outline-color: var(--primary-clr);
+    color: var(--primary-clr);
+    background: white;
 }
 
 .error-msg {

@@ -3,7 +3,7 @@ body {
     height: 100vh;
     font-weight: 400;
     font-family: var(--ff-1);
-    background-color: var(--primary-clr);
+    /* background-color: var(--primary-clr); */
 }
 
 * {

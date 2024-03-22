@@ -1,5 +1,5 @@
 const fs = require('fs')
-const words = require('./words.json')
+const words = require('./data/words.json')
 
 function generateWords(mode, max, min = 0) {
     let data = words.data
@@ -21,17 +21,14 @@ function generateWords(mode, max, min = 0) {
     }
 
 
-    console.log("Randomizing ...")
     newData = randomize(newData)
 
     newData = JSON.stringify(newData)
-    console.log(newData)
 
     const fileName = `./${mode}.json`
 
     fs.writeFile(fileName, newData, (err) => {
         if (err) return err
-        console.log("success writing to file")
     })
     return 'done'
 }
@@ -60,6 +57,8 @@ function getWords(mode) {
             return generateWords(mode, 8, 4);
         case "hard":
             return generateWords(mode, 20, 7);
+        default:
+            throw new Error("Invalid mode");
     }
 }
 

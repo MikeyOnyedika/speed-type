@@ -29,13 +29,14 @@ const UserScore = ({ wpm, accuracy, words: [correctWords, wrongWords], letters: 
         <div className='score-board-wrapper'>
             <div className="primary-score-board">
                 <div className="main-score score">
+                    <span>Speed: </span>
                     <div className="score-value" ref={wpmRef}>{wpm}</div>
                     <div className="score-title">WPM</div>
                 </div>
 
                 <div className="sub-score score">
-                    <div className="score-value" ref={accuracyRef}>{accuracy}</div>
-                    <div className="score-title">Accuracy (%)</div>
+                    <div className="score-title">Accuracy: </div>
+                    <div className="score-value" ref={accuracyRef}>{accuracy}%</div>
                 </div>
 
             </div>

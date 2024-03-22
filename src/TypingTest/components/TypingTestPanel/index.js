@@ -2,9 +2,9 @@ import './styles.css'
 import repeatIcon from '../../../assets/repeat-cycle.svg'
 import React from 'react'
 import { useEffect } from 'react'
-import easy from '../../../utilities/easy.json'
-import mid from '../../../utilities/mid.json'
-import hard from '../../../utilities/hard.json'
+import easy from '../../../data/easy.json'
+import mid from '../../../data/mid.json'
+import hard from '../../../data/hard.json'
 import { useRef } from 'react'
 import { useReducer } from 'react'
 import { useState } from 'react'
@@ -120,7 +120,6 @@ const TypingTestPanelState = createContext(null)
 
 const TypingTestPanel = ({ time, mode }) => {
     const { setMode, setTime, setIsGameSet } = useContext(TypingTestPageContext)
-    console.log(TypingTestPageContext)
     const wordsPanelRef = useRef(null)
     const [state, dispatch] = useReducer(reducer, defaultState)
     const [userInputText, setUserInputText] = useState("")
@@ -270,7 +269,6 @@ const TypingTestPanel = ({ time, mode }) => {
         if (state.currentWordSpan !== null && userInputText.length !== 0) {
             // color current word <span> depending of whether user made a typo or not
             const wrongLetters = memoisedMatchText().wrongLetters
-            console.log(wrongLetters)
             if (wrongLetters.length !== 0) {
                 addCSSClass(state.currentWordSpan, "highlight-wrong")
             } else {
@@ -304,11 +302,9 @@ const TypingTestPanel = ({ time, mode }) => {
         const numberOfCorrectLetters = state.correctLetters.length
 
         const wpm = (numberOfCorrectLetters / 5 / timeInMin)
-        console.log(wpm)
         // accuracy = (correctLetters/totalletters) * 100
         const numberOfTotalLetters = state.wrongLetters.length + state.correctLetters.length
         const accuracy = Math.round((state.correctLetters.length / numberOfTotalLetters) * 100)
-        console.log(accuracy)
 
         dispatch({ type: "result", payload: { wpm, accuracy } })
     }, [state.correctLetters, time, state.wrongLetters.length])
